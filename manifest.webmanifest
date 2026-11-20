@@ -1,0 +1,18 @@
+{
+  "name": "Tiên Đạo – Hệ Thống Tu Luyện",
+  "short_name": "Tiên Đạo",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#121827",
+  "theme_color": "#171d2d",
+  "lang": "vi",
+  "description": "Ứng dụng tu luyện phong cách tiên hiệp",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

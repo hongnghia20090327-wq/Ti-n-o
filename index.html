@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#171d2d"><meta name="description" content="Tiên Đạo - hệ thống tu luyện gamified">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Tiên Đạo – Hệ Thống Tu Luyện</title>
+<style>
+:root{color-scheme:dark;--bg:#121827;--panel:#202b40;--panel2:#293750;--gold:#e9c77e;--muted:#aab6ca;--line:#68779266}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#354563,#121827 60%);color:#f2eddf;font:15px system-ui,sans-serif;min-height:100vh}button{font:inherit;cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}.app{max-width:680px;margin:auto;padding:14px 13px 90px}.top{display:flex;justify-content:space-between;align-items:center;margin:8px 0 14px}.eyebrow{font-size:10px;letter-spacing:3px;color:var(--gold)}h1{font-size:26px;margin:2px 0}.muted{color:var(--muted)}.gold{color:var(--gold)}.panel{background:#202b40eF;border:1px solid var(--line);border-radius:14px;padding:13px;margin:10px 0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:12px}.stat{background:#151f30;border-radius:9px;text-align:center;padding:9px;font-size:12px}.stat b{display:block;font-size:17px;margin-top:3px}.bar{height:9px;border-radius:20px;background:#101725;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#7796d0,#c3dafa);border-radius:20px}.nav{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;position:sticky;top:0;background:#151d2beF;z-index:3;border-radius:10px;margin:12px 0;padding:3px}.tab{border:0;background:none;color:var(--muted);padding:10px 2px;font-size:11px;border-bottom:2px solid transparent}.tab.active{color:var(--gold);border-color:var(--gold)}.page.hidden{display:none}.btn{border:0;border-radius:9px;padding:10px 12px;background:linear-gradient(120deg,#bd914c,#e6c77f);color:#211b13;font-weight:800}.alt{border:1px solid #73809b;background:#34415a;color:#eee;border-radius:9px;padding:9px 11px}.full{width:100%;margin-top:8px}.tag{font-size:10px;color:var(--gold);border:1px solid #a88a5055;border-radius:5px;padding:3px 6px}.quest,.item{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:11px;margin-top:9px}.row{display:flex;align-items:center;gap:10px}.grow{flex:1}.notice{color:var(--gold);font-size:12px;min-height:18px;margin-top:8px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.realmrow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px}.small{font-size:12px}.item .icon{font-size:28px}.footer{border-top:1px solid var(--line);padding-top:12px;margin-top:20px;color:var(--muted);font-size:10px;display:flex;justify-content:space-between}
+</style>
+</head>
+<body><main class="app">
+<header class="top"><div><div class="eyebrow">IMMORTAL CULTIVATION SYSTEM</div><h1>☯ TIÊN ĐẠO</h1><div class="muted small">Hành trình nghịch thiên tu luyện</div></div><div class="gold" style="text-align:right">Linh thạch<br><b style="font-size:21px">◈ <span id="coins">100</span></b></div></header>
+<section class="panel">
+ <div class="row"><div class="grow"><div class="muted small">ĐẠO HIỆU</div><b id="rank">Phàm Nhân</b></div><div style="text-align:right"><span class="tag" id="realm">LUYỆN KHÍ TẦNG 1</span><div class="small muted" style="margin-top:6px">Cấp <b id="level">1</b></div></div></div>
+ <div class="row small" style="justify-content:space-between;margin:14px 0 5px"><span>☯ Tu vi</span><span id="xpText">0/100 EXP</span></div><div class="bar"><div class="fill" id="xpBar" style="width:0%"></div></div>
+ <div class="stats"><div class="stat">❤️ Sinh lực<b id="hp">100</b></div><div class="stat">⚔ Công kích<b id="atk">10</b></div><div class="stat">🛡 Phòng ngự<b id="def">5</b></div></div>
+ <div class="small muted" style="margin-top:10px">Suy yếu do bỏ tu luyện: <b id="penalty" class="gold">0%</b></div>
+</section>
+<nav class="nav"><button class="tab active" data-tab="quests">📜 Nhiệm vụ</button><button class="tab" data-tab="cult">🧘 Tu luyện</button><button class="tab" data-tab="shop">🏮 Thương hội</button><button class="tab" data-tab="hunt">🐉 Săn yêu</button><button class="tab" data-tab="boss">👹 Boss</button></nav>
+<section id="quests" class="page">
+ <div class="row" style="justify-content:space-between"><b>📜 Nhiệm vụ hôm nay</b><span class="tag">HẰNG NGÀY</span></div><p class="muted small">Nhiệm vụ đổi mỗi ngày. Chỉ xác nhận sau khi thực sự tập luyện.</p>
+ <div class="panel"><div class="row" style="justify-content:space-between"><b class="gold">✦ Nhiệm vụ liên hoàn</b><b id="chainCount">0/3</b></div><div class="bar" style="margin-top:8px"><div id="chainBar" class="fill" style="width:0%;background:#d9b365"></div></div><p class="muted small">Hoàn thành 3 nhiệm vụ để nhận thêm thưởng.</p><button class="btn full" id="chainBtn" disabled>Nhận thưởng liên hoàn</button><div id="chainMsg" class="notice"></div></div>
+ <div id="taskList"></div>
+ <div class="panel"><b class="gold">🌌 Thử thách đột phá</b><p class="muted small" id="breakDesc">Đạt cấp cần thiết để mở thử thách.</p><div class="row small" style="justify-content:space-between"><span id="breakTarget">Mốc tiếp theo: cấp 5</span><span id="breakStatus">Chưa mở</span></div><div class="bar" style="margin-top:8px"><div class="fill" id="breakBar" style="width:0%;background:#d9b365"></div></div><button class="btn full" id="breakBtn" disabled>Thử thách đột phá</button><div id="breakMsg" class="notice"></div></div><div id="taskMsg" class="notice"></div>
+</section>
+<section id="cult" class="page hidden">
+ <div class="panel"><div style="font-size:42px;text-align:center">🧘</div><h3 class="gold" style="text-align:center;margin:4px">Đạo cơ của ngươi</h3><div class="grid2"><div class="stat">Tổng nhiệm vụ<b id="totalTasks">0</b></div><div class="stat">Chiến thắng<b id="wins">0</b></div><div class="stat">EXP tích lũy<b id="totalXp">0</b></div><div class="stat">Ngày tu luyện<b id="streak">0</b></div></div></div>
+ <div class="panel"><b class="gold">☯ Cảnh giới</b><div id="realmList" style="margin-top:8px"></div></div>
+ <div class="panel"><b class="gold">📈 Tiến trình rèn luyện</b><p id="difficulty" class="muted small"></p><p class="muted small">Độ khó chỉ tăng dần theo tiến trình có hoàn thành. Nghỉ ngơi khi đau hoặc mệt không bị xem là thất bại.</p></div>
+ <div class="panel"><b class="gold">⚔ Trang bị đang dùng</b><div id="equipment" class="small" style="margin-top:8px"></div></div>
+ <div class="panel"><b class="gold">🌿 Khôi phục</b><p class="muted small">Nghỉ ngơi hồi đầy sinh lực. Không cần tập bù sau ngày nghỉ.</p><button class="alt full" id="restBtn">Hồi phục sinh lực</button><div id="restMsg" class="notice"></div></div>
+</section>
+<section id="shop" class="page hidden"><b>🏮 Vạn Bảo Các</b><p class="muted small">Cửa hàng mở khóa theo cảnh giới. Trang bị cấp cao cần tu vi tương ứng.</p><div id="shopList" class="grid2"></div><div id="shopMsg" class="notice"></div></section>
+<section id="hunt" class="page hidden"><div class="panel" style="text-align:center"><span class="tag">SƠN LÂM YÊU VỰC</span><div id="monsterIcon" style="font-size:55px;margin:12px">🐺</div><h2 id="monsterName" style="margin:0">Sơn Lang</h2><p class="muted small" id="monsterDesc"></p><div class="row small" style="justify-content:space-between"><span>Sinh lực yêu thú</span><b id="monsterHpText">40/40</b></div><div class="bar" style="margin-top:6px"><div id="monsterBar" class="fill" style="width:100%;background:#c85e67"></div></div><div class="stats"><div class="stat">Công kích<b id="monsterAtk">5</b></div><div class="stat">Thưởng<b id="monsterReward">30 ◈</b></div><div class="stat">Săn được<b id="monsterWins">0</b></div></div><button id="attackBtn" class="btn full">⚔ XUẤT KIẾM</button><button id="nextMonster" class="alt full">Tìm yêu thú khác</button><div id="huntMsg" class="notice"></div></div></section>
+<section id="boss" class="page hidden"><div class="panel" style="text-align:center"><span class="tag">BÍ CẢNH MỖI TUẦN</span><div style="font-size:55px;margin:12px">🐲</div><h2 style="margin:0">Thanh Giao Vương</h2><p class="muted small">Sát thương được cộng dồn qua các lượt. Nhận thưởng một lần mỗi tuần.</p><div class="row small" style="justify-content:space-between"><span>Sinh lực Boss</span><b id="bossHpText">500/500</b></div><div class="bar" style="margin-top:6px"><div id="bossBar" class="fill" style="width:100%;background:#c85e67"></div></div><div class="stats"><div class="stat">Công kích<b>22</b></div><div class="stat">Thưởng<b>200 ◈</b></div><div class="stat">Tuần này<b id="bossState">Chưa hạ</b></div></div><button id="bossAttack" class="btn full">⚔ THÁCH ĐẤU BOSS</button><div id="bossMsg" class="notice"></div></div></section>
+<footer class="footer"><span>TIÊN ĐẠO • TU LUYỆN BẤT TẬN</span><span id="saveStatus">Tự động lưu</span></footer>
+</main>
+<script>
+(()=>{
+const $=id=>document.getElementById(id), KEY='tienDaoPWA_v2';
+const realms=['Luyện Khí','Trúc Cơ','Kim Đan','Nguyên Anh','Hóa Thần','Luyện Hư','Hợp Thể','Đại Thừa','Độ Kiếp'];
+const pool=[
+ ['🔥','Khởi động thân thể','Khởi động toàn thân 5 phút',10,5],
+ ['🚶','Bộ pháp hành tẩu','Đi bộ nhanh 10 phút',15,8],
+ ['👊','Rèn luyện quyền pháp','Chống đẩy theo khả năng',20,10],
+ ['⚡','Thân pháp linh hoạt','Nhảy dây 3 phút hoặc vận động tương đương',20,10],
+ ['🧘','Tĩnh tâm nhập định','Plank 20 giây hoặc bài tập bụng phù hợp',15,8],
+ ['🌿','Dưỡng khí điều tức','Giãn cơ nhẹ 5 phút',15,8],
+ ['🏃','Khinh công sơ luyện','Đi bộ nhanh hoặc chạy nhẹ 5 phút',15,8],
+ ['💪','Luyện thể căn bản','Squat theo khả năng',20,10],
+ ['🦵','Thiết cốt công','Tập chân nhẹ nhàng 5 phút',15,8]
+];
+const gear=[
+ {id:'wood',name:'Mộc Kiếm',icon:'🗡️',kind:'weapon',tier:0,price:35,atk:3,desc:'+3 công kích'},
+ {id:'cloth',name:'Vải Bố Y',icon:'🥋',kind:'armor',tier:0,price:40,def:3,desc:'+3 phòng ngự'},
+ {id:'iron',name:'Thiết Kiếm',icon:'⚔️',kind:'weapon',tier:1,price:100,atk:9,desc:'+9 công kích'},
+ {id:'ironarmor',name:'Huyền Thiết Giáp',icon:'🛡️',kind:'armor',tier:1,price:110,def:10,desc:'+10 phòng ngự'},
+ {id:'jade',name:'Linh Vân Kiếm',icon:'⚔️',kind:'weapon',tier:2,price:220,atk:19,desc:'+19 công kích'},
+ {id:'robe',name:'Cửu Huyền Bào',icon:'🥻',kind:'armor',tier:2,price:240,def:22,desc:'+22 phòng ngự'},
+ {id:'dragon',name:'Kim Long Thần Kiếm',icon:'🐉',kind:'weapon',tier:3,price:450,atk:35,desc:'+35 công kích'},
+ {id:'celestial',name:'Tiên Linh Bảo Y',icon:'✨',kind:'armor',tier:3,price:480,def:40,desc:'+40 phòng ngự'},
+ {id:'pill',name:'Hồi Khí Đan',icon:'🧪',kind:'potion',tier:0,price:30,desc:'Hồi 40 sinh lực'}
+];
+const monsters=[['Sơn Lang','🐺','Yêu thú cấp thấp',40,5,30],['Hỏa Hồ','🦊','Hồ ly mang linh hỏa',75,9,55],['Thiết Giáp Hùng','🐻','Yêu thú có giáp cứng',120,14,90],['Hắc Giao','🐉','Giao long nơi vực sâu',190,20,150],['Ma Tôn Phân Thân','👹','Thử thách tu sĩ mạnh',300,28,250]];
+const date=()=>new Date().toLocaleDateString('en-CA'),week=()=>{let d=new Date();d.setDate(d.getDate()-((d.getDay()+6)%7));return d.toLocaleDateString('en-CA')};
+const fresh=()=>({coins:100,xp:0,level:1,hp:100,total:0,wins:0,totalXp:0,inventory:[],weapon:null,armor:null,done:[],day:date(),activeDays:0,lastActive:null,chainClaim:false,breaks:[],monster:0,enemyHp:40,enemyDead:false,bossHp:500,bossWeek:week(),bossClaim:false,penalty:0,lastPenaltyDate:date(),restored:0});
+let s;try{s={...fresh(),...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{s=fresh()}
+function save(){localStorage.setItem(KEY,JSON.stringify(s));$('saveStatus').textContent='✓ Đã lưu trên thiết bị'}
+function realmIndex(){return Math.min(8,Math.floor((s.level-1)/5))}
+function stage(){return Math.min(4,Math.floor(s.activeDays/7))}
+function stats(){let w=gear.find(x=>x.id===s.weapon),a=gear.find(x=>x.id===s.armor),factor=1-s.penalty/100;return{atk:Math.max(1,Math.floor((10+Math.floor((s.level-1)*1.5)+(w?.atk||0))*factor)),def:Math.max(0,Math.floor((5+Math.floor((s.level-1)*.8)+(a?.def||0))*factor))}}
+function gain(x,c){s.xp+=x;s.totalXp+=x;s.coins+=c;while(s.xp>=s.level*100){s.xp-=s.level*100;s.level++;s.hp=100}}
+function tasks(){let seed=Number(date().replaceAll('-','')),a=[...pool],out=[];for(let i=0;i<4;i++){seed=(seed*9301+49297)%233280;out.push(a.splice(seed%a.length,1)[0])}return out}
+function todayDone(){return s.day===date()?s.done:[]}
+function syncDay(){if(s.day!==date()){s.day=date();s.done=[];s.chainClaim=false}if(s.bossWeek!==week()){s.bossWeek=week();s.bossHp=500;s.bossClaim=false}}
+function dailyPenalty(){let now=new Date(date()+'T00:00:00'),last=new Date((s.lastActive||date())+'T00:00:00'),gap=Math.floor((now-last)/86400000);if(gap>=3){s.penalty=Math.min(30,Math.floor(gap/3)*5);s.lastPenaltyDate=date()}}
+syncDay();
+if(s.lastActive){
+ const now=new Date(date()+'T00:00:00'),last=new Date(s.lastActive+'T00:00:00');
+ const gap=Math.max(0,Math.floor((now-last)/86400000));
+ s.penalty=gap>=15?30:gap>=8?20:gap>=5?10:gap>=3?5:0;
+}
+const notice=(id,msg)=>$(id).textContent=msg;
+function render(){
+let z=stats(),ri=realmIndex(),done=todayDone(),qs=tasks();
+$('coins').textContent=s.coins;$('level').textContent=s.level;$('rank').textContent=s.level>=25?'Tu sĩ Nguyên Anh':s.level>=10?'Tu sĩ Trúc Cơ':'Phàm Nhân';$('realm').textContent=realms[ri].toUpperCase()+' TẦNG '+((s.level-1)%5+1);$('hp').textContent=s.hp;$('atk').textContent=z.atk;$('def').textContent=z.def;$('xpText').textContent=s.xp+'/'+s.level*100+' EXP';$('xpBar').style.width=(s.xp/(s.level*100)*100)+'%';$('penalty').textContent=s.penalty+'%';
+$('taskList').innerHTML=qs.map((q,i)=>{let d=done.includes(i),factor=1+stage()*.1,n=Math.max(1,Math.round(q[3]*factor));return `<div class="quest row"><span style="font-size:26px">${q[0]}</span><div class="grow"><b>${q[1]}</b><div class="muted small">${q[2]} · Mục tiêu: ${n}</div><div class="gold small">+${Math.round(q[3]*factor)} EXP · +${Math.round(q[4]*factor)} ◈</div></div><button class="${d?'alt':'btn'} small" data-task="${i}" ${d?'disabled':''}>${d?'✓ Xong':'Hoàn thành'}</button></div>`}).join('');
+$('chainCount').textContent=done.length+'/3';$('chainBar').style.width=Math.min(100,done.length/3*100)+'%';$('chainBtn').disabled=done.length<3||s.chainClaim;$('chainBtn').textContent=s.chainClaim?'Đã nhận':'Nhận thưởng liên hoàn';
+let target=Math.floor((s.level-1)/5)*5+5,open=s.level>=target&&!s.breaks.includes(target);$('breakTarget').textContent='Mốc tiếp theo: cấp '+target;$('breakStatus').textContent=s.breaks.includes(target)?'Đã vượt qua':open?'Đã mở':'Chưa mở';$('breakDesc').textContent=open?'Đã đủ tu vi. Thử thách đột phá đã mở.':'Tích lũy tu vi đến cấp '+target+' để mở thử thách.';$('breakBar').style.width=Math.min(100,s.level/target*100)+'%';$('breakBtn').disabled=!open;
+$('totalTasks').textContent=s.total;$('wins').textContent=s.wins;$('totalXp').textContent=s.totalXp;$('streak').textContent=s.activeDays;$('difficulty').textContent='Bậc nhiệm vụ '+(stage()+1)+'/5 · Hệ số mục tiêu ×'+(1+stage()*.1).toFixed(1);
+$('realmList').innerHTML=realms.map((r,i)=>`<div class="realmrow"><span>${i<=ri?'☯':'🔒'} ${r}</span><span class="${i===ri?'gold':'muted'}">${i<ri?'Đã đạt':i===ri?'Hiện tại':'Cấp '+(i*5+1)}</span></div>`).join('');
+$('equipment').innerHTML='🗡️ Vũ khí: '+(gear.find(x=>x.id===s.weapon)?.name||'Chưa trang bị')+'<br>🛡️ Giáp: '+(gear.find(x=>x.id===s.armor)?.name||'Chưa trang bị');
+$('shopList').innerHTML=gear.map(it=>{let unlocked=realmIndex()>=it.tier,owned=s.inventory.includes(it.id),equipped=s[it.kind]===it.id;return `<div class="item"><div class="icon">${it.icon}</div><b>${it.name}</b><div class="muted small">${it.desc}</div><div class="gold small" style="margin-top:6px">${it.price} ◈ · ${['Phàm phẩm','Linh phẩm','Bảo phẩm','Tiên phẩm'][it.tier]}</div>${!unlocked?'<div class="muted small">🔒 Cần '+realms[it.tier]+'</div>':it.kind==='potion'?`<button class="btn full" data-buy="${it.id}" ${s.coins<it.price?'disabled':''}>Mua và dùng</button>`:owned?`<button class="alt full" data-equip="${it.id}">${equipped?'Đang trang bị':'Trang bị'}</button>`:`<button class="btn full" data-buy="${it.id}" ${s.coins<it.price?'disabled':''}>Mua</button>`}</div>`}).join('');
+renderMonster();renderBoss();save()
+}
+function renderMonster(){let m=monsters[s.monster];$('monsterIcon').textContent=m[1];$('monsterName').textContent=m[0];$('monsterDesc').textContent=m[2];$('monsterHpText').textContent=Math.max(0,s.enemyHp)+'/'+m[3];$('monsterBar').style.width=Math.max(0,s.enemyHp/m[3]*100)+'%';$('monsterAtk').textContent=m[4];$('monsterReward').textContent=m[5]+' ◈';$('monsterWins').textContent=s.wins;$('attackBtn').disabled=s.enemyDead||s.hp<=0}
+function renderBoss(){$('bossHpText').textContent=Math.max(0,s.bossHp)+'/500';$('bossBar').style.width=Math.max(0,s.bossHp/500*100)+'%';$('bossState').textContent=s.bossClaim?'Đã hạ':'Chưa hạ';$('bossAttack').disabled=s.bossClaim||s.hp<=0}
+function recover(){s.hp=100;s.penalty=Math.max(0,s.penalty-5);s.restored++;notice('restMsg','Đã hồi đầy sinh lực. Điểm suy yếu giảm 5%.');render()}
+root.addEventListener('click',e=>{let b=e.target.closest('button');if(!b)return;
+if(b.dataset.tab){root.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('#'+['quests','cult','shop','hunt','boss'].join(',#')+' .page');root.querySelectorAll('.page').forEach(x=>x.classList.toggle('hidden',x.id!==b.dataset.tab));return}
+if(b.dataset.task!==undefined){let i=+b.dataset.task,done=todayDone();if(done.includes(i))return;let q=tasks()[i],f=1+stage()*.1;done.push(i);s.done=done;s.total++;let wasToday=s.lastActive===date();if(!wasToday){s.activeDays++;s.lastActive=date()}gain(Math.round(q[3]*f),Math.round(q[4]*f));s.penalty=Math.max(0,s.penalty-2);notice('taskMsg','Hoàn thành '+q[1]+'. Nhận EXP và linh thạch; suy yếu giảm 2%.');render();return}
+if(b.id==='chainBtn'&&todayDone().length>=3&&!s.chainClaim){s.chainClaim=true;gain(40,30);notice('chainMsg','Liên hoàn thành công: +40 EXP, +30 linh thạch.');render();return}
+if(b.id==='breakBtn'){let t=Math.floor((s.level-1)/5)*5+5;if(s.level>=t&&!s.breaks.includes(t)){s.breaks.push(t);gain(100,60);s.hp=100;notice('breakMsg','Đột phá thành công! +100 EXP, +60 linh thạch.');render()}return}
+if(b.dataset.buy){let it=gear.find(x=>x.id===b.dataset.buy);if(!it||s.coins<it.price||realmIndex()<it.tier)return;s.coins-=it.price;if(it.kind==='potion'){s.hp=Math.min(100,s.hp+40);s.penalty=Math.max(0,s.penalty-5);notice('shopMsg','Đan dược đã dùng: +40 sinh lực, giảm 5% suy yếu.')}else{s.inventory.push(it.id);notice('shopMsg','Đã mua '+it.name)}render();return}
+if(b.dataset.equip){let it=gear.find(x=>x.id===b.dataset.equip);s[it.kind]=it.id;notice('shopMsg','Đã trang bị '+it.name);render();return}
+if(b.id==='attackBtn'){let m=monsters[s.monster],z=stats();s.enemyHp=Math.max(0,s.enemyHp-z.atk);if(!s.enemyHp){s.enemyDead=true;s.wins++;gain(25,m[5]);notice('huntMsg','Chiến thắng! +'+m[5]+' linh thạch, +25 EXP.')}else{let d=Math.max(1,m[4]-z.def);s.hp=Math.max(0,s.hp-d);notice('huntMsg','Gây '+z.atk+' sát thương. Yêu thú phản công '+d+'.')}render();return}
+if(b.id==='nextMonster'){s.monster=(s.monster+1)%monsters.length;s.enemyHp=monsters[s.monster][3];s.enemyDead=false;notice('huntMsg','Yêu thú mới xuất hiện.');render();return}
+if(b.id==='bossAttack'&&!s.bossClaim&&s.hp>0){let z=stats(),d=Math.max(1,22-z.def);s.bossHp=Math.max(0,s.bossHp-z.atk);if(!s.bossHp){s.bossClaim=true;gain(100,200);notice('bossMsg','Boss bị đánh bại! +200 linh thạch, +100 EXP.')}else{s.hp=Math.max(0,s.hp-d);notice('bossMsg','Gây '+z.atk+' sát thương. Boss phản công '+d+'. Tiến trình được lưu.')}render();return}
+if(b.id==='restBtn')recover();
+});
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+})();
+</script></body></html>
